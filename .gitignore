@@ -32,3 +32,19 @@ Thumbs.db
 *.swp
 *.bak
 *~
+
+# Template files (not needed for the mod)
+AUTOMATION_SCRIPTS.md
+QUICK_REFERENCE.md
+README_TEMPLATE.md
+START_HERE.md
+TEMPLATE_INSTRUCTIONS.md
+FREECAM_README.md
+setup-new-mod.bat
+setup-new-mod.ps1
+reset-to-template.bat
+reset-to-template.ps1
+LICENSE-template
+CODEOWNERS
+docs/
+.github/
