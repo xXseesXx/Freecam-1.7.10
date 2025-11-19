@@ -1,0 +1,34 @@
+# Gradle
+.gradle/
+build/
+out/
+classes/
+
+# IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Eclipse
+.classpath
+.project
+.settings/
+bin/
+
+# VSCode
+.vscode/
+
+# Minecraft
+run/
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Other
+*.log
+*.swp
+*.bak
+*~
