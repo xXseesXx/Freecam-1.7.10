@@ -1,19 +1,12 @@
 # Freecam Mod for Minecraft 1.7.10
 
-A smooth and feature-rich freecam mod for Minecraft 1.7.10 GTNH.
+A simple freecam mod for Minecraft 1.7.10.
 
 ## Features
 
-- **Toggle freecam with F4** - Easy on/off
-- **Smooth camera movement** - No flickering or artifacts
-- **WASD controls** - Move forward/backward/left/right
-- **Space/Shift** - Move up/down
-- **Sprint boost** - Hold sprint key for 50% speed increase
-- **Adjustable speed** - Use mouse wheel to change camera speed (0.2x - 10x)
-- **Visual feedback** - Speed display when adjusting
-- **Player frozen** - Your player stays completely still while in freecam
-- **Gravity support** - Player falls naturally if in the air
-- **Configurable** - Set default speed in config file
+- **Press F4** to toggle freecam mode
+- **Creative-style flight** - WASD to move, Space/Shift for up/down, Sprint for speed boost
+- **Mouse wheel** to adjust camera speed
 
 ## Installation
 
@@ -23,34 +16,17 @@ A smooth and feature-rich freecam mod for Minecraft 1.7.10 GTNH.
 
 ## Usage
 
-1. Press **F4** to toggle freecam on/off
-2. Use **WASD** to move around
-3. Use **Space** to move up, **Shift** to move down
-4. Hold **Sprint** (Left Ctrl) to move 50% faster
-5. Scroll **mouse wheel** to adjust camera speed
-6. Press **F4** again to return to your player
+Press **F4** to enter freecam mode. Your player stays in place while you fly around freely. Use the mouse wheel to adjust speed. Press **F4** again to return to your player.
 
 ## Configuration
 
-Edit `config/seesfreecam.cfg` to change the default camera speed:
-
-```properties
-# Default freecam movement speed (0.2 - 10.0)
-freecamSpeed=1.0
-```
-
-## Technical Details
-
-- **Mod ID**: `seesfreecam`
-- **Version**: 1.0
-- **Minecraft Version**: 1.7.10
-- **Forge Version**: 10.13.4.1614+
+Edit `config/seesfreecam.cfg` to change the default camera speed (0.2 - 10.0).
 
 ## Building from Source
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/seesfreecam.git
-cd seesfreecam
+git clone https://github.com/xXseesXx/Freecam-1.7.10.git
+cd Freecam-1.7.10
 ./gradlew build
 ```
 
@@ -58,9 +34,8 @@ The built jar will be in `build/libs/`
 
 ## Credits
 
-- **Author**: xXseesXx
-- **Based on**: GTNH ExampleMod template
+**Author**: xXseesXx
 
 ## License
 
-MIT License - See LICENSE file for details
+MIT License
