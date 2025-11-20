@@ -100,6 +100,11 @@ public class FreecamEntity extends EntityLivingBase {
         this.prevRotationYaw = this.rotationYaw;
         this.prevRotationPitch = this.rotationPitch;
 
+        // Don't update rotation if a GUI is open
+        if (mc.currentScreen != null) {
+            return;
+        }
+
         // Handle mouse input
         float sensitivity = mc.gameSettings.mouseSensitivity * 0.6F + 0.2F;
         float mouseSensitivity = sensitivity * sensitivity * sensitivity * 8.0F;

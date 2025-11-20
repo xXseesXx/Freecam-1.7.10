@@ -2,6 +2,7 @@ package com.xXseesXx.seesfreecam;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.multiplayer.PlayerControllerMP;
 import net.minecraft.util.MovementInput;
 
 public class FreecamHandler {
@@ -11,6 +12,7 @@ public class FreecamHandler {
     private static float savedYaw, savedPitch;
     private static boolean savedSneaking;
     private static MovementInput savedMovementInput;
+    private static PlayerControllerMP savedPlayerController;
 
     public static boolean isFreecamEnabled() {
         return freecamEnabled;
@@ -42,9 +44,13 @@ public class FreecamHandler {
         savedPitch = player.rotationPitch;
         savedSneaking = player.isSneaking();
         savedMovementInput = player.movementInput;
+        savedPlayerController = mc.playerController;
 
         // Replace movement input to freeze player
         player.movementInput = new FreecamMovementInput();
+
+        // Replace player controller to block all interactions
+        mc.playerController = new FreecamPlayerController(mc, mc.getNetHandler());
 
         // Create freecam entity
         freecamEntity = new FreecamEntity(mc.theWorld, player);
@@ -74,6 +80,9 @@ public class FreecamHandler {
             // Restore original movement input
             player.movementInput = savedMovementInput;
         }
+
+        // Restore original player controller
+        mc.playerController = savedPlayerController;
 
         // Clean up freecam entity
         if (freecamEntity != null) {
