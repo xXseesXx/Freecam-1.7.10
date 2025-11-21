@@ -7,8 +7,14 @@ import net.minecraft.util.MovementInput;
 
 public class FreecamHandler {
 
+    public enum MovementMode {
+        FREECAM, // Camera moves freely, player frozen
+        PLAYER // Player moves, camera stays STATIC (no interactions in either mode)
+    }
+
     private static boolean freecamEnabled = false;
     private static FreecamEntity freecamEntity;
+    private static MovementMode movementMode = MovementMode.FREECAM;
     private static float savedYaw, savedPitch;
     private static boolean savedSneaking;
     private static MovementInput savedMovementInput;
@@ -20,6 +26,24 @@ public class FreecamHandler {
 
     public static FreecamEntity getFreecamEntity() {
         return freecamEntity;
+    }
+
+    public static MovementMode getMovementMode() {
+        return movementMode;
+    }
+
+    public static void toggleMovementMode() {
+        if (!freecamEnabled) {
+            return;
+        }
+
+        if (movementMode == MovementMode.FREECAM) {
+            movementMode = MovementMode.PLAYER;
+            MyMod.LOG.info("Switched to PLAYER mode - camera STATIC, player can move");
+        } else {
+            movementMode = MovementMode.FREECAM;
+            MyMod.LOG.info("Switched to FREECAM mode - camera can move, player frozen");
+        }
     }
 
     public static void toggleFreecam() {
@@ -46,7 +70,7 @@ public class FreecamHandler {
         savedMovementInput = player.movementInput;
         savedPlayerController = mc.playerController;
 
-        // Replace movement input to freeze player
+        // Replace movement input with custom handler
         player.movementInput = new FreecamMovementInput();
 
         // Replace player controller to block all interactions
@@ -57,6 +81,9 @@ public class FreecamHandler {
 
         // Set as render view entity
         mc.renderViewEntity = freecamEntity;
+
+        // Reset to freecam movement mode
+        movementMode = MovementMode.FREECAM;
 
         freecamEnabled = true;
         MyMod.LOG.info("Freecam enabled");
@@ -86,7 +113,6 @@ public class FreecamHandler {
 
         // Clean up freecam entity
         if (freecamEntity != null) {
-            freecamEntity.setDead();
             freecamEntity = null;
         }
 

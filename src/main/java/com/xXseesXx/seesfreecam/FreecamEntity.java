@@ -20,9 +20,9 @@ public class FreecamEntity extends EntityLivingBase {
         // Set initial speed from config
         this.speed = Config.freecamSpeed;
 
-        // Set position at player's eye level
+        // Set position at player's feet (not eye level)
         double x = player.posX;
-        double y = player.posY + player.getEyeHeight();
+        double y = player.posY;
         double z = player.posZ;
 
         this.setPosition(x, y, z);
@@ -77,6 +77,12 @@ public class FreecamEntity extends EntityLivingBase {
     }
 
     @Override
+    public float getEyeHeight() {
+        // Return player eye height for proper raytrace positioning
+        return 1.62F;
+    }
+
+    @Override
     public void onUpdate() {
         // Do nothing - we handle updates manually
     }
@@ -96,21 +102,32 @@ public class FreecamEntity extends EntityLivingBase {
     }
 
     public void updateRotation(Minecraft mc) {
-        // Store previous rotation
-        this.prevRotationYaw = this.rotationYaw;
-        this.prevRotationPitch = this.rotationPitch;
-
         // Don't update rotation if a GUI is open
         if (mc.currentScreen != null) {
+            // Still sync prev values even when paused
+            this.prevRotationYaw = this.rotationYaw;
+            this.prevRotationPitch = this.rotationPitch;
             return;
         }
 
-        // Handle mouse input
+        // In PLAYER mode, keep camera rotation STATIC (don't move)
+        if (FreecamHandler.getMovementMode() == FreecamHandler.MovementMode.PLAYER) {
+            // Just update prev values for smooth rendering, but don't change rotation
+            this.prevRotationYaw = this.rotationYaw;
+            this.prevRotationPitch = this.rotationPitch;
+            return;
+        }
+
+        // FREECAM mode - handle mouse input
         float sensitivity = mc.gameSettings.mouseSensitivity * 0.6F + 0.2F;
         float mouseSensitivity = sensitivity * sensitivity * sensitivity * 8.0F;
 
         float yawChange = mc.mouseHelper.deltaX * mouseSensitivity * 0.15F;
         float pitchChange = mc.mouseHelper.deltaY * mouseSensitivity * 0.15F;
+
+        // Apply changes with proper interpolation
+        this.prevRotationYaw = this.rotationYaw;
+        this.prevRotationPitch = this.rotationPitch;
 
         this.rotationYaw += yawChange;
         this.rotationPitch -= pitchChange;
@@ -133,7 +150,13 @@ public class FreecamEntity extends EntityLivingBase {
         this.lastTickPosY = this.posY;
         this.lastTickPosZ = this.posZ;
 
-        // Handle movement
+        // In PLAYER mode, keep camera position STATIC (don't move)
+        if (FreecamHandler.getMovementMode() == FreecamHandler.MovementMode.PLAYER) {
+            // Camera stays exactly where it is - no position updates
+            return;
+        }
+
+        // FREECAM mode - handle camera movement
         float forward = 0;
         float strafe = 0;
         float vertical = 0;

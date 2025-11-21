@@ -39,15 +39,25 @@ public class MovementHandler {
             initialized = true;
         }
 
-        // Freeze rotation (movement is handled by FreecamMovementInput)
-        player.rotationYaw = frozenYaw;
-        player.rotationPitch = frozenPitch;
-        player.prevRotationYaw = frozenYaw;
-        player.prevRotationPitch = frozenPitch;
-        player.rotationYawHead = frozenYaw;
-        player.prevRotationYawHead = frozenYaw;
+        // Only freeze player in FREECAM mode
+        // In PLAYER mode, let the player move normally
+        if (FreecamHandler.getMovementMode() == FreecamHandler.MovementMode.FREECAM) {
+            // Freeze rotation (movement is handled by FreecamMovementInput)
+            player.rotationYaw = frozenYaw;
+            player.rotationPitch = frozenPitch;
+            player.prevRotationYaw = frozenYaw;
+            player.prevRotationPitch = frozenPitch;
+            player.rotationYawHead = frozenYaw;
+            player.prevRotationYawHead = frozenYaw;
 
-        // Freeze sneak state
-        player.setSneaking(frozenSneak);
+            // Freeze sneak state
+            player.setSneaking(frozenSneak);
+        } else {
+            // In PLAYER mode, update frozen values to current player state
+            // so when switching back to FREECAM, it uses the new position
+            frozenYaw = player.rotationYaw;
+            frozenPitch = player.rotationPitch;
+            frozenSneak = player.isSneaking();
+        }
     }
 }

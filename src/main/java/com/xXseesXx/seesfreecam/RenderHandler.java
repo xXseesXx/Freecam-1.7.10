@@ -13,13 +13,23 @@ public class RenderHandler {
             return;
         }
 
+        Minecraft mc = Minecraft.getMinecraft();
         FreecamEntity freecam = FreecamHandler.getFreecamEntity();
+
         if (freecam == null) {
             return;
         }
 
+        // Always use freecam as render view
+        // Camera stays at freecam position in both modes
+        if (mc.renderViewEntity != freecam) {
+            mc.renderViewEntity = freecam;
+        }
+
         // Update rotation during render for smooth camera movement
-        Minecraft mc = Minecraft.getMinecraft();
-        freecam.updateRotation(mc);
+        // Only in FREECAM mode - in PLAYER mode rotation is static
+        if (FreecamHandler.getMovementMode() == FreecamHandler.MovementMode.FREECAM) {
+            freecam.updateRotation(mc);
+        }
     }
 }

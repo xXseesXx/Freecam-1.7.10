@@ -5,8 +5,11 @@ A simple freecam mod for Minecraft 1.7.10.
 ## Features
 
 - **Press F4** to toggle freecam mode
+- **Press F5** to switch between freecam movement and player movement
+- **Static camera mode** - Position camera, then control your player for cinematic shots
 - **Creative-style flight** - WASD to move, Space/Shift for up/down, Sprint for speed boost
 - **Mouse wheel** to adjust camera speed
+- **No interactions** - Block breaking/placing disabled in freecam (spectator-like)
 
 ## Installation
 
@@ -16,7 +19,15 @@ A simple freecam mod for Minecraft 1.7.10.
 
 ## Usage
 
-Press **F4** to enter freecam mode. Your player stays in place while you fly around freely. Use the mouse wheel to adjust speed. Press **F4** again to return to your player.
+Press **F4** to enter freecam mode. Your player stays in place while you fly around freely. 
+
+Position your camera for the perfect shot, then press **F5** to toggle between:
+- **Freecam mode**: Camera moves freely, player frozen in place
+- **Player mode**: Camera stays STATIC, control your player (perfect for YouTube intros/drone shots)
+
+**Note**: Block interactions are disabled in both modes (spectator-like behavior). This is a Minecraft engine limitation - the camera and interaction point cannot be separated.
+
+Use the mouse wheel to adjust camera speed. Press **F4** again to exit freecam and return to your player.
 
 ## Configuration
 

@@ -13,6 +13,7 @@ public class InteractionCanceller {
 
     @SubscribeEvent
     public void onPlayerInteract(PlayerInteractEvent event) {
+        // Cancel all interactions while freecam is enabled (both modes)
         if (FreecamHandler.isFreecamEnabled()) {
             event.setCanceled(true);
         }
@@ -20,6 +21,7 @@ public class InteractionCanceller {
 
     @SubscribeEvent
     public void onEntityInteract(EntityInteractEvent event) {
+        // Cancel all interactions while freecam is enabled (both modes)
         if (FreecamHandler.isFreecamEnabled()) {
             event.setCanceled(true);
         }
@@ -27,8 +29,15 @@ public class InteractionCanceller {
 
     @SubscribeEvent
     public void onAttackEntity(AttackEntityEvent event) {
+        // Cancel all attacks while freecam is enabled (both modes)
         if (FreecamHandler.isFreecamEnabled()) {
             event.setCanceled(true);
+
+            // Extra protection: prevent self-attack
+            Minecraft mc = Minecraft.getMinecraft();
+            if (mc.thePlayer != null && event.target == mc.thePlayer) {
+                event.setCanceled(true);
+            }
         }
     }
 
@@ -44,6 +53,12 @@ public class InteractionCanceller {
 
         Minecraft mc = Minecraft.getMinecraft();
 
+        // Prevent targeting the player entity
+        if (mc.objectMouseOver != null && mc.objectMouseOver.entityHit == mc.thePlayer) {
+            mc.objectMouseOver = null;
+        }
+
+        // Block all interactions in both modes
         // Cancel any ongoing block breaking
         if (mc.playerController != null) {
             mc.playerController.resetBlockRemoving();

@@ -17,32 +17,36 @@ public class FreecamPlayerController extends PlayerControllerMP {
 
     @Override
     public void onPlayerDamageBlock(int x, int y, int z, int side) {
-        // Do nothing - block all block breaking
+        // Block all interactions in both modes
     }
 
     @Override
     public boolean onPlayerDestroyBlock(int x, int y, int z, int side) {
-        return false; // Block all block destroying
+        // Block all interactions in both modes
+        return false;
     }
 
     @Override
     public boolean onPlayerRightClick(EntityPlayer player, World world, ItemStack stack, int x, int y, int z, int side,
         Vec3 hitVec) {
-        return false; // Block all right clicks
+        // Block all interactions in both modes
+        return false;
     }
 
     @Override
     public void attackEntity(EntityPlayer player, Entity target) {
-        // Do nothing - no entity attacks
+        // Block all attacks in both modes - prevents self-attack crash
+        // Do nothing - don't call super
     }
 
     @Override
     public void clickBlock(int x, int y, int z, int side) {
-        // Do nothing - block all block clicks
+        // Block all interactions in both modes
     }
 
     @Override
     public void resetBlockRemoving() {
-        // Do nothing - ignore break progress reset
+        // Always allow resetting (used by InteractionCanceller)
+        super.resetBlockRemoving();
     }
 }
